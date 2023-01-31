@@ -2,11 +2,11 @@ import React from 'react';
 import { nanoid } from 'nanoid';
 import styles from './Form.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContacts } from '../redux/userSlice';
+import { addContact } from 'components/redux/operations';
 
 const Form = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts.items);
 
   const nameId = nanoid();
   const numberId = nanoid();
@@ -14,24 +14,19 @@ const Form = () => {
   const handleSubmit = evt => {
     evt.preventDefault();
     const form = evt.currentTarget;
-    const contactName = contacts.contacts.map(contact => contact.name);
-    const nameFilter = contacts.contacts.filter(cont =>
-      cont.name.includes(contactName)
+    const newContactName = form.elements.name.value;
+    const nameInContact = contacts.find(
+      newContact =>
+        newContact.name.toLowerCase().toString === newContactName.toString
     );
-    const nameLength = nameFilter.length;
-    console.log(nameFilter);
-
-    if (nameLength === 1) {
-      return alert(contacts.name, 'is already in contacts');
-    }
-
-    dispatch(
-      addContacts({
-        id: nanoid(),
-        name: form.elements.name.value,
-        number: form.elements.number.value,
-      })
-    );
+    nameInContact
+      ? alert(`${newContactName} is already in contacts`)
+      : dispatch(
+          addContact({
+            name: form.elements.name.value,
+            phone: form.elements.number.value,
+          })
+        );
 
     form.reset();
   };

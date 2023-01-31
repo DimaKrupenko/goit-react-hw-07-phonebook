@@ -15,6 +15,14 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
+export const addContact = createAsyncThunk(
+  'contacts/addContact',
+  async ({ name, phone }) => {
+    const response = await axios.post('/contacts/', { name, phone });
+    return response.data;
+  }
+);
+
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async contactId => {
