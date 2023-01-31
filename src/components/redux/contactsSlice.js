@@ -16,7 +16,7 @@
 
 // export const { useFetchContacts } = contactsApi;
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts } from './operations.js';
+import { fetchContacts, deleteContact } from './operations.js';
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -37,6 +37,13 @@ const contactsSlice = createSlice({
     [fetchContacts.rejected](state, action) {
       state.isLoading = false;
       state.error = action.payload;
+    },
+    [deleteContact.fulfilled](state, action) {
+      const index = state.items.findIndex(
+        contact => contact.id === action.payload
+      );
+      state.items.splice(index, 1);
+      //   state.items = state.items.filter(contact => contact.id !== action.id);
     },
   },
 });
