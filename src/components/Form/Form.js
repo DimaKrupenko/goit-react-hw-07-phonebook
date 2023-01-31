@@ -14,10 +14,9 @@ const Form = () => {
   const handleSubmit = evt => {
     evt.preventDefault();
     const form = evt.currentTarget;
-    const newContactName = form.elements.name.value;
+    const newContactName = form.elements.name.value.toLowerCase();
     const nameInContact = contacts.find(
-      newContact =>
-        newContact.name.toLowerCase().toString === newContactName.toString
+      newContact => newContact.name.toLowerCase() === newContactName
     );
     nameInContact
       ? alert(`${newContactName} is already in contacts`)
