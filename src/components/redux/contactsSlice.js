@@ -39,12 +39,14 @@ const contactsSlice = createSlice({
       state.error = action.payload;
     },
     [deleteContact.fulfilled](state, action) {
-      const index = state.items.findIndex(
-        contact => contact.id === action.payload
+      state.items = state.items.filter(
+        contact => contact.id !== action.payload.id
       );
-      state.items.splice(index, 1);
       //   state.items = state.items.filter(contact => contact.id !== action.id);
     },
+    // [deleteContact.fulfilled]: (state, { payload }) => {
+    //   state.items = state.items.filter(contact => contact.id !== payload.id);
+    // },
   },
 });
 export const contactsReducer = contactsSlice.reducer;

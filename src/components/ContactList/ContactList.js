@@ -19,7 +19,6 @@ const ContactList = () => {
   const visibleContact = items.filter(contact =>
     contact.name.toLowerCase().includes(filter)
   );
-  console.log(visibleContact);
   return (
     <ul className={styles.contact}>
       {isLoading && <b>Loading contacts...</b>}
